@@ -34,7 +34,7 @@ const chatkit = new Chatkit.default({
 })
 
 app.get('/', (req,res) => {
-	res.send(db.users);
+	res.send(db.users,"Success!");
 })
 
 app.post('/signin', (req,res) => {
