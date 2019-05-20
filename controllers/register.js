@@ -1,6 +1,6 @@
 const Chatkit = require('@pusher/chatkit-server');
 const { instanceLocator, key } = require('./config');
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 const knex = require('knex')
 const saltRounds = 10;
 const db = knex({
@@ -17,12 +17,10 @@ const chatkit = new Chatkit.default({
 })
 
 const handleRegister = (req, res,) => {
-	const {email,name,password} = req.body;
-	if (!email || !name || !password) {
+	const { email,password,firstname,lastname,username } = req.body;
+	if (!email || !username || !password) {
 		return res.status(400).json('incorrect form submission');
 	}
-
-	const { email,password,firstname,lastname,username } = req.body;
 
 	const hash = bcrypt.hashSync(password, saltRounds);
 	db.transaction(trx => {
